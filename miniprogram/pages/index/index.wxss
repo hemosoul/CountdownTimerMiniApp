@@ -1,0 +1,146 @@
+/**index.wxss**/
+page {
+  height: 100vh;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: #000;
+  color: #fff;
+  
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 22rpx;
+}
+
+.current-date {
+  font-size: 15rpx;
+  margin-top: 10rpx;
+  color: #888;
+}
+
+.countdown-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  max-height: 80vh;
+  margin-top: 8rpx;
+}
+
+.time-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10rpx;
+}
+
+.flip-card {
+  background: #333;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  font-size: 12vmin;
+  font-weight: bold;
+  min-width: 120rpx;
+  text-align: center;
+}
+
+.time-separator {
+  font-size: 8vmin;
+  margin: 0 5rpx;
+  color: #fff;
+}
+
+.time-label {
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #888;
+}
+
+.controls {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 60rpx;
+}
+
+.control-btn {
+  background: transparent;
+  border: none;
+  padding: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-icon {
+  width: 48rpx;
+  height: 48rpx;
+  color: #ffffff;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.control-btn:active .settings-icon {
+  opacity: 1;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+  width: 80%;
+}
+
+.userinfo-avatar {
+  overflow: hidden;
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+.avatar-wrapper {
+  padding: 0;
+  width: 56px !important;
+  border-radius: 8px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+}
+
+.nickname-wrapper {
+  display: flex;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  border-top: .5px solid rgba(0, 0, 0, 0.1);
+  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+.nickname-label {
+  width: 105px;
+}
+
+.nickname-input {
+  flex: 1;
+}

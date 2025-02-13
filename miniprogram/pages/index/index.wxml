@@ -1,0 +1,42 @@
+<!--index.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container" style="background: {{backgroundColor}}">
+    <!-- 标题区域 -->
+    <view class="title">
+      <text>{{title || '面试倒计时'}}</text>
+      <text class="current-date">{{currentDate}}</text>
+    </view>
+    
+    <!-- 倒计时显示区域 -->
+    <view class="countdown-container">
+      <view class="time-block">
+        <view class="flip-card">
+          <text>{{hours}}</text>
+        </view>
+        <text class="time-label">小时</text>
+      </view>
+      <view class="time-separator">:</view>
+      <view class="time-block">
+        <view class="flip-card">
+          <text>{{minutes}}</text>
+        </view>
+        <text class="time-label">分钟</text>
+      </view>
+      <view class="time-separator">:</view>
+      <view class="time-block">
+        <view class="flip-card">
+          <text>{{seconds}}</text>
+        </view>
+        <text class="time-label">秒</text>
+      </view>
+    </view>
+
+    <!-- 控制按钮区域 -->
+    <view class="controls">
+      <view class="control-btn" bindtap="openSettings">
+        图标
+     
+      </view>
+    </view>
+  </view>
+</scroll-view>

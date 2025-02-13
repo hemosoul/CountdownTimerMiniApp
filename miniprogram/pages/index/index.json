@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+  },
+  "navigationBarBackgroundColor": "#000000",
+  "navigationBarTextStyle": "white",
+  "navigationStyle": "default",
+  "navigationBarTitleText": "面试倒计时"
+}
