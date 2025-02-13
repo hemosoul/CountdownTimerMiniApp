@@ -28,13 +28,17 @@ page {
   color: #888;
 }
 
+.countdown-area {
+  position: relative;
+}
+
 .countdown-container {
   display: flex;
-  align-items:start;
+  align-items: center;
   justify-content: center;
-  flex: 1;
-  max-height: 80vh;
-  margin-top: 18rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
 }
 
 .time-block {

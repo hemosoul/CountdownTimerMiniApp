@@ -8,28 +8,38 @@
     </view>
     
     <!-- 倒计时显示区域 -->
-    <view class="countdown-container">
-      <view class="time-block">
-        <view class="flip-card">
-          <text>{{hours}}</text>
+    <movable-area class="countdown-area" style="height: 100%; width: 100%;">
+      <movable-view 
+        class="countdown-container"
+        direction="all"
+        inertia="true"
+        x="{{positionX}}"
+        y="{{positionY}}"
+        bindchange="onMove"
+        style="transform: translate(-50%, -50%);"
+      >
+        <view class="time-block">
+          <view class="flip-card">
+            <text>{{hours}}</text>
+          </view>
+          <text class="time-label">小时</text>
         </view>
-        <text class="time-label">小时</text>
-      </view>
-      <view class="time-separator">:</view>
-      <view class="time-block">
-        <view class="flip-card">
-          <text>{{minutes}}</text>
+        <view class="time-separator">:</view>
+        <view class="time-block">
+          <view class="flip-card">
+            <text>{{minutes}}</text>
+          </view>
+          <text class="time-label">分钟</text>
         </view>
-        <text class="time-label">分钟</text>
-      </view>
-      <view class="time-separator">:</view>
-      <view class="time-block">
-        <view class="flip-card">
-          <text>{{seconds}}</text>
+        <view class="time-separator">:</view>
+        <view class="time-block">
+          <view class="flip-card">
+            <text>{{seconds}}</text>
+          </view>
+          <text class="time-label">秒</text>
         </view>
-        <text class="time-label">秒</text>
-      </view>
-    </view>
+      </movable-view>
+    </movable-area>
 
     <!-- 控制按钮区域 -->
     <view class="controls">
