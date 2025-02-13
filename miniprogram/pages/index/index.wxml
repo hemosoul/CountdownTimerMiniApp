@@ -34,8 +34,11 @@
     <!-- 控制按钮区域 -->
     <view class="controls">
       <view class="control-btn" bindtap="openSettings">
-        图标
-     
+        <image 
+          src="/resource/icon/setting.svg" 
+          mode="aspectFit"
+          style="width: 32px; height: 32px;"
+        />
       </view>
     </view>
   </view>

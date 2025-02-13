@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/logs/logs"
   ],
-  "enableEnhancedSVG": true,
+  "resizable":true,
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "Weixin",
