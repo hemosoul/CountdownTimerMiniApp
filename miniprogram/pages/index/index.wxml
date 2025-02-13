@@ -43,12 +43,129 @@
 
     <!-- 控制按钮区域 -->
     <view class="controls">
-      <view class="control-btn" bindtap="openSettings">
+      <view class="control-btn" bindtap="toggleDrawer">
         <image 
           src="/resource/icon/setting.svg" 
           mode="aspectFit"
           style="width: 32px; height: 32px;"
         />
+      </view>
+    </view>
+
+    <!-- 抽屉容器 -->
+    <view class="drawer-container {{drawerVisible ? 'show' : ''}}">
+      <view class="drawer-mask" bindtap="toggleDrawer"></view>
+      <view class="drawer-content">
+        <!-- 设置内容 -->
+        <view class="drawer-header">
+          <text>设置</text>
+          <view class="close-btn" bindtap="toggleDrawer">×</view>
+        </view>
+        <view class="setting-form">
+          <!-- 倒计时设置 -->
+          <view class="form-item">
+            <text class="form-label">倒计时间</text>
+            <view class="time-input-group">
+              <view class="input-wrapper">
+                <input 
+                  class="input" 
+                  type="number" 
+                  placeholder="0"
+                  min="0"
+                  value="{{targetHours}}"
+                  bindinput="onHoursChange"
+                />
+                <text class="input-suffix">时</text>
+              </view>
+              <view class="input-wrapper">
+                <input 
+                  class="input" 
+                  type="number" 
+                  placeholder="0"
+                  min="0"
+                  max="59"
+                  value="{{targetMinutes}}"
+                  bindinput="onMinutesChange"
+                />
+                <text class="input-suffix">分</text>
+              </view>
+              <view class="input-wrapper">
+                <input 
+                  class="input" 
+                  type="number" 
+                  placeholder="0"
+                  min="0"
+                  max="59"
+                  value="{{targetSeconds}}"
+                  bindinput="onSecondsChange"
+                />
+                <text class="input-suffix">秒</text>
+              </view>
+            </view>
+          </view>
+
+          <!-- 提醒设置 -->
+          <view class="form-item">
+            <text class="form-label">提前提醒</text>
+            <view class="radio-group">
+              <view 
+                class="radio-item {{remindBefore === 5 ? 'active' : ''}}"
+                bindtap="setRemindTime" 
+                data-value="5"
+              >5分钟前</view>
+              <view 
+                class="radio-item {{remindBefore === 10 ? 'active' : ''}}"
+                bindtap="setRemindTime" 
+                data-value="10"
+              >10分钟前</view>
+            </view>
+          </view>
+
+          <!-- 背景设置 -->
+          <view class="form-item">
+            <text class="form-label">背景类型</text>
+            <view class="segmented-control">
+              <view 
+                class="segment {{bgType === 'color' ? 'active' : ''}}"
+                bindtap="setBgType" 
+                data-type="color"
+              >颜色</view>
+              <view 
+                class="segment {{bgType === 'image' ? 'active' : ''}}"
+                bindtap="setBgType" 
+                data-type="image"
+              >图片</view>
+            </view>
+          </view>
+
+          <!-- 颜色选择器 -->
+          <view class="form-item" wx:if="{{bgType === 'color'}}">
+            <text class="form-label">选择颜色</text>
+            <view class="color-picker">
+              <view 
+                class="color-option {{backgroundColor === item ? 'selected' : ''}}"
+                wx:for="{{presetColors}}"
+                wx:key="index"
+                style="background: {{item}}"
+                bindtap="selectColor"
+                data-color="{{item}}"
+              />
+            </view>
+          </view>
+
+          <!-- 图片上传 -->
+          <view class="form-item" wx:if="{{bgType === 'image'}}">
+            <button 
+              class="upload-btn" 
+              bindtap="chooseImage"
+            >{{backgroundImage ? '更换背景' : '选择图片'}}</button>
+          </view>
+
+          <!-- 保存按钮 -->
+          <view class="form-action">
+            <button class="save-btn" bindtap="saveSettings">保存设置</button>
+          </view>
+        </view>
       </view>
     </view>
   </view>

@@ -13,7 +13,27 @@ interface ICountdownSettings {
   backgroundColor: string;
 }
 
-Page({
+// 引入类型声明
+type PageData = {
+  title: string
+  currentDate: string
+  hours: string
+  minutes: string
+  seconds: string
+  backgroundColor: string
+  isRunning: boolean
+  remainingTime: number
+  timer?: number
+  settings: ICountdownSettings
+  positionX: number
+  positionY: number
+  drawerVisible: boolean
+  targetHours: number
+  targetMinutes: number
+  targetSeconds: number
+}
+
+Page<PageData, WechatMiniprogram.Page.CustomOption>({
   data: {
     title: '面试倒计时',
     currentDate: '',
@@ -30,12 +50,24 @@ Page({
       seconds: 0,
       reminderMinutes: 5,
       backgroundColor: '#000000'
-    } as ICountdownSettings
+    } as ICountdownSettings,
+    positionX: 0,
+    positionY: 0,
+    drawerVisible: true,
+    targetHours: 0,
+    targetMinutes: 0,
+    targetSeconds: 0
   },
 
   onLoad() {
     this.updateCurrentDate();
     this.loadSettings();
+    // 添加类型断言确保数据结构
+    const position = wx.getStorageSync<{x: number, y: number}>('countdownPosition') || {x: 0, y: 0}
+    this.setData({
+      positionX: position.x,
+      positionY: position.y
+    })
   },
 
   onUnload() {
@@ -65,6 +97,9 @@ Page({
 
   // 保存设置
   saveSettings(settings: ICountdownSettings): void {
+    const totalSeconds = this.data.targetHours * 3600 
+      + this.data.targetMinutes * 60 
+      + this.data.targetSeconds
     wx.setStorageSync('countdownSettings', settings);
     this.setData({ settings });
   },
@@ -159,5 +194,31 @@ Page({
     wx.navigateTo({
       url: '../settings/settings'
     });
+  },
+
+  onMove(e: WechatMiniprogram.TouchEvent) {
+    const {x, y} = e.detail
+    wx.setStorageSync('countdownPosition', {x, y})
+  },
+
+  toggleDrawer() {
+    this.setData({
+      drawerVisible: !this.data.drawerVisible
+    })
+  },
+
+  onHoursChange(e: any) {
+    const value = Math.max(0, parseInt(e.detail.value) || 0)
+    this.setData({ targetHours: value })
+  },
+
+  onMinutesChange(e: any) {
+    const value = Math.min(59, Math.max(0, parseInt(e.detail.value) || 0))
+    this.setData({ targetMinutes: value })
+  },
+
+  onSecondsChange(e: any) {
+    const value = Math.min(59, Math.max(0, parseInt(e.detail.value) || 0))
+    this.setData({ targetSeconds: value })
   }
 });

@@ -157,3 +157,177 @@ page {
 .nickname-input {
   flex: 1;
 }
+
+/* 抽屉容器 */
+.drawer-container {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  height: 100vh;
+  width: 30%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+.drawer-container.show {
+  right: 0;
+}
+
+/* 遮罩层 */
+.drawer-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.drawer-container.show .drawer-mask {
+  opacity: 1;
+}
+
+/* 抽屉内容 */
+.drawer-content {
+  position: absolute;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: #1a1a1a;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.2);
+  transform: translateX(100%);
+  transition: transform 0.3s;
+  padding: 0 24rpx;
+  box-sizing: border-box;
+}
+
+.drawer-container.show .drawer-content {
+  transform: translateX(0);
+}
+
+/* 抽屉头部 */
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.drawer-header text {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.close-btn {
+  font-size: 28px;
+  color: rgba(255,255,255,0.6);
+  padding: 8rpx 24rpx;
+}
+
+/* 表单样式 */
+.setting-form {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.form-label {
+  color: rgba(255,255,255,0.8);
+  font-size: 15px;
+  margin-bottom: 8rpx;
+}
+
+/* 新增时间输入组样式 */
+.time-input-group {
+  display: flex;
+  gap: 20rpx;
+  width: 100%;
+}
+
+.input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.input-suffix {
+  position: absolute;
+  right: 20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.6);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* 输入框样式 */
+.input {
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+  font-size: 16px;
+  caret-color: #4f46e5;
+}
+
+/* 分段控件 */
+.segmented-control {
+  display: flex;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.segment {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  color: rgba(255,255,255,0.6);
+  transition: all 0.2s;
+  border-radius: 6px;
+}
+
+.segment.active {
+  background: #4f46e5;
+  color: #fff;
+}
+
+/* 颜色选择器 */
+.color-picker {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.color-option {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.color-option.selected {
+  border-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+/* 保存按钮 */
+.save-btn {
+  background: #4f46e5;
+  color: #fff;
+  border-radius: 8px;
+  margin-top: 32rpx;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.save-btn:active {
+  opacity: 0.8;
+}
