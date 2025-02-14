@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container" style="background:{{backgroundColor}}; background-size: cover; background-position: center;">
+  <view class="container" style="{{bgType === 'image' ? 'background-image: url(' + backgroundImage + ')' : 'background:' + backgroundColor}}; background-size: cover; background-position: center;">
     <!-- 标题区域 -->
     <view class="title">
       <text>{{title || '面试倒计时'}}</text>

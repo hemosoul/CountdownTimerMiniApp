@@ -326,10 +326,9 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     const color = e.currentTarget.dataset.color;
     this.setData({
       backgroundColor: color,
-      bgType: 'color' // 确保切换到颜色模式
+      bgType: 'color' // 强制切换背景类型为颜色
     });
     
-    // 立即更新背景（无需等待保存）
     wx.setStorageSync('countdownSettings', {
       ...wx.getStorageSync('countdownSettings'),
       backgroundColor: color,
@@ -346,20 +345,22 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
         sizeType: ['compressed']
       });
 
-      if (res.tempFiles && res.tempFiles[0].tempFilePath) {
+      if (res.tempFiles?.[0]?.tempFilePath) {
         this.setData({
-          backgroundImage: res.tempFiles[0].tempFilePath
+          backgroundImage: res.tempFiles[0].tempFilePath,
+          bgType: 'image' // 强制切换背景类型为图片
         });
         
-        // 立即保存到本地
-        wx.setStorageSync('backgroundImage', res.tempFiles[0].tempFilePath);
+        // 更新存储设置
+        wx.setStorageSync('countdownSettings', {
+          ...wx.getStorageSync('countdownSettings'),
+          backgroundImage: res.tempFiles[0].tempFilePath,
+          bgType: 'image'
+        });
       }
     } catch (error) {
       console.error('选择图片失败:', error);
-      wx.showToast({
-        title: '选择图片失败',
-        icon: 'none'
-      });
+      wx.showToast({ title: '选择图片失败', icon: 'none' });
     }
   },
 
@@ -368,6 +369,25 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     const type = e.currentTarget.dataset.type;
     this.setData({ bgType: type });
     wx.setStorageSync('bgType', type); // 立即保存类型
+  },
+
+  clearImage() {
+    this.setData({
+      backgroundImage: '',
+      bgType: 'color' // 清除后自动切换回颜色背景
+    })
+    
+    // 更新本地存储
+    const settings = wx.getStorageSync('countdownSettings') || {}
+    settings.backgroundImage = ''
+    settings.bgType = 'color'
+    wx.setStorageSync('countdownSettings', settings)
+    
+    wx.showToast({
+      title: '已清除背景',
+      icon: 'success',
+      duration: 1500
+    })
   },
 
   // ... existing other methods ...
