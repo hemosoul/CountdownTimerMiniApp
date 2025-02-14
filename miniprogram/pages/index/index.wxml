@@ -57,7 +57,7 @@
       <view class="drawer-mask" bindtap="toggleDrawer"></view>
       <view class="drawer-content weui-cells">
         <!-- 修改头部区域 -->
-        <view class="weui-cell drawer-header" style="position: sticky; top: 0; background: #1a1a1a; z-index: 1000;">
+        <view class="weui-cell drawer-header" style="position: sticky; top: 0;  z-index: 1000;">
           <view class="weui-cell__bd">
             <text class="weui-cell__title">设置</text>
           </view>

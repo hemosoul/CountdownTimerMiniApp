@@ -26,7 +26,7 @@ page {
 .current-date {
   font-size: 15rpx;
   margin-top: 10rpx;
-  color: #888;
+  color: #ccc9c9;
 }
 
 .countdown-area {
@@ -196,7 +196,7 @@ page {
   right: 0;
   width: 60%;
   height: 100%;
-  background: #1a1a1a;
+  background: rgba(26, 26, 26, 0.86);
   box-shadow: -4px 0 16px rgba(0,0,0,0.2);
   transform: translateX(100%);
   transition: transform 0.3s;
@@ -214,6 +214,7 @@ page {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  background-color: transparent;
 }
 
 .drawer-header text {
