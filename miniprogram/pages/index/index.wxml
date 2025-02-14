@@ -35,9 +35,14 @@
     </view>
     <!-- 控制按钮区域 -->
     <view class="controls">
+      <view class="weui-cell weui-cell_switch">
+        <image src="/resource/icon/refresh.svg"bindtap="resetToInitial"  mode="aspectFit" style="width: 32px; height: 32px;" />
+      
+     </view>
       <view class="control-btn" bindtap="toggleDrawer">
         <image src="/resource/icon/setting.svg" mode="aspectFit" style="width: 32px; height: 32px;" />
       </view>
+      
     </view>
     <!-- 抽屉容器 -->
     <view class="drawer-container {{drawerVisible ? 'show' : ''}}" data-weui-theme="dark">
@@ -51,6 +56,8 @@
           <view class="weui-cell__ft">
             <view class="weui-btn_icon-circle-close" bindtap="toggleDrawer"></view>
           </view>
+
+
         </view>
         <!-- 添加滚动容器 -->
         <scroll-view class="drawer-scroll" scroll-y style="height: 60vh;">

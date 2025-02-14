@@ -223,7 +223,13 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
 
   // 运行计时器
   runTimer(): void {
-    this.clearTimer();
+ 
+
+    wx.showToast({
+      title: '开始计时',
+      icon: 'success',
+      duration: 1000
+    })
     
     const timer = setInterval(() => {
       if (this.data.remainingTime <= 0) {
@@ -232,7 +238,9 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       }
 
       this.data.remainingTime--;
+
       this.updateDisplay(this.data.remainingTime);
+      console.log(this.data.remainingTime)
       this.checkReminder();
     }, 1000);
 
@@ -254,10 +262,12 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     const seconds = totalSeconds % 60;
 
     this.setData({
-      hours: hours.toString().padStart(2, '0'),
-      minutes: minutes.toString().padStart(2, '0'),
-      seconds: seconds.toString().padStart(2, '0')
+      targetHours: hours.toString().padStart(2, '0'),
+      targetMinutes: minutes.toString().padStart(2, '0'),
+      targetSeconds: seconds.toString().padStart(2, '0')
+  
     });
+    console.log(this.data.targetHours)
   },
 
   // 检查提醒
@@ -412,6 +422,42 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       icon: 'success',
       duration: 1500
     })
+  },
+
+  // 新增重置到初始值方法
+  resetToInitial() {
+    const savedSettings = wx.getStorageSync('countdownSettings');
+    if (savedSettings) {
+      // 从存储中恢复原始设置
+      this.setData({
+        targetHours: savedSettings.targetHours || 0,
+        targetMinutes: savedSettings.targetMinutes || 0,
+        targetSeconds: savedSettings.targetSeconds || 0,
+        remindBefore: savedSettings.remindBefore || 0
+      });
+      
+      // 重新计算剩余时间
+      const totalSeconds = this.calculateRemainingTime(savedSettings);
+      this.setData({
+        remainingTime: totalSeconds,
+        isRunning: false
+      });
+      this.updateDisplay(totalSeconds);
+      
+      // 停止当前计时
+      this.clearTimer();
+      
+      wx.showToast({
+        title: '已重置到初始值',
+        icon: 'success',
+        duration: 1000
+      });
+    } else {
+      wx.showToast({
+        title: '无保存的初始值',
+        icon: 'none'
+      });
+    }
   },
 
   // ... existing other methods ...
