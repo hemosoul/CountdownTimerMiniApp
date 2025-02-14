@@ -20,21 +20,21 @@
       >
         <view class="time-block">
           <view class="flip-card">
-            <text>{{hours}}</text>
+            <text>{{targetHours}}</text>
           </view>
           <text class="time-label">小时</text>
         </view>
         <view class="time-separator">:</view>
         <view class="time-block">
           <view class="flip-card">
-            <text>{{minutes}}</text>
+            <text>{{targetMinutes}}</text>
           </view>
           <text class="time-label">分钟</text>
         </view>
         <view class="time-separator">:</view>
         <view class="time-block">
           <view class="flip-card">
-            <text>{{seconds}}</text>
+            <text>{{targetSeconds}}</text>
           </view>
           <text class="time-label">秒</text>
         </view>

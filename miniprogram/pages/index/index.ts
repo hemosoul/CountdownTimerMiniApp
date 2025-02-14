@@ -17,9 +17,6 @@ interface ICountdownSettings {
 type PageData = {
   title: string
   currentDate: string
-  hours: string
-  minutes: string
-  seconds: string
   backgroundColor: string
   isRunning: boolean
   remainingTime: number
@@ -41,9 +38,6 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   data: {
     title: '',
     currentDate: '',
-    hours: '00',
-    minutes: '00',
-    seconds: '00',
     backgroundColor: '#000000',
     isRunning: false,
     remainingTime: 0,
@@ -78,6 +72,12 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   },
 
   onLoad() {
+    const savedSettings = wx.getStorageSync('countdownSettings');
+    if (savedSettings) {
+      this.setData({
+        title: savedSettings.title || '面试倒计时'
+      });
+    }
     this.updateCurrentDate();
     this.loadSettings();
     // 添加类型断言确保数据结构
@@ -92,6 +92,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       targetTime: 15 * 60, // 15分钟转换为秒
       remindBefore: 120
     }
+    console.log(settings);
     if (settings) {
       this.setData({
         targetHours: settings.targetHours || 0,
@@ -106,6 +107,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
         title: settings.title || '面试倒计时'
       })
     }
+    console.log(this.data.targetHours,this.data.targetMinutes,this.data.targetSeconds);
 
     const bgType = wx.getStorageSync('bgType') || 'color';
     const backgroundImage = wx.getStorageSync('backgroundImage') || '';
