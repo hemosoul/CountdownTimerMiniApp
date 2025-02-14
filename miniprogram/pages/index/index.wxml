@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container" style="background: {{backgroundColor}}">
+  <view class="container" style="background:{{backgroundColor}}; background-size: cover; background-position: center;">
     <!-- 标题区域 -->
     <view class="title">
       <text>{{title || '面试倒计时'}}</text>
@@ -67,7 +67,7 @@
         </view>
 
         <!-- 添加滚动容器 -->
-        <scroll-view class="drawer-scroll" scroll-y style="height: 70vh;">
+        <scroll-view class="drawer-scroll" scroll-y style="height: 60vh;">
           <!-- 倒计时设置 -->
           <view class="weui-cell weui-cell_input">
             <view class="weui-cell__hd">
@@ -141,27 +141,11 @@
             </view>
           </view>
 
-          <!-- 背景类型选择 -->
+          
+          <!-- 背景颜色选择器 -->
           <view class="weui-cell">
             <view class="weui-cell__hd">
-              <text class="weui-label">背景类型</text>
-            </view>
-            <view class="weui-cell__bd">
-              <view class="weui-segmented-control">
-                <block wx:for="{{['color', 'image']}}" wx:key="*this">
-                  <view class="weui-segmented-control__item {{bgType === item ? 'weui-segmented-control__item_active' : ''}}"
-                        bindtap="setBgType" data-type="{{item}}">
-                    {{item === 'color' ? '颜色' : '图片'}}
-                  </view>
-                </block>
-              </view>
-            </view>
-          </view>
-
-          <!-- 颜色选择器 -->
-          <view class="weui-cell" wx:if="{{bgType === 'color'}}">
-            <view class="weui-cell__hd">
-              <text class="weui-label">选择颜色</text>
+              <text class="weui-label">背景颜色</text>
             </view>
             <view class="weui-cell__bd">
               <view class="color-grids">
@@ -178,19 +162,36 @@
             </view>
           </view>
 
-          <!-- 图片上传 -->
-          <view class="weui-cell" wx:if="{{bgType === 'image'}}">
+            <!-- 图片上传 -->
+          <view class="weui-cell" style="margin-bottom:150rpx;">
+            <view class="weui-cell__hd">
+              <text class="weui-label">背景图片</text>
+            </view>
             <view class="weui-cell__bd">
-              <button class="weui-btn weui-btn_primary" 
-                      bindtap="chooseImage">
-                {{backgroundImage ? '更换背景' : '选择图片'}}
-              </button>
+              <view class="weui-flex">
+                <view class="weui-flex__item" style="flex: 1;">
+                  <button class="weui-btn weui-btn_primary" 
+                          style="padding: 8px 12px; line-height: 1.2;"
+                          bindtap="chooseImage">
+                    {{backgroundImage ? '更换背景' : '选择图片'}}
+                  </button>
+                </view>
+                <view class="weui-flex__item" style="flex: 0 0 30%; margin-left: 16rpx;" wx:if="{{backgroundImage}}">
+                  <button class="weui-btn weui-btn_warn" 
+                          style="padding: 8px 12px; line-height: 1.2;"
+                          bindtap="clearImage">
+                    清除
+                  </button>
+                </view>
+              </view>
             </view>
           </view>
         </scroll-view>
 
+         
+
         <!-- 底部固定按钮 -->
-        <view class="weui-btn-area" style="position: sticky; bottom: 0; background: #1a1a1a; padding: 15px 0;">
+        <view class="weui-btn-area" style="position: sticky; bottom: 0; background: #1a1a1a; padding:15px 0 30px;z-index:100;">
           <button class="weui-btn weui-btn_primary" bindtap="saveSettings">保存设置</button>
         </view>
       </view>

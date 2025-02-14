@@ -72,7 +72,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       '#34495e',    // 湿沥青
       '#40407a',    // 深品蓝
       '#222f3e',    // 帝王蓝
-      '#ff9f43'     // 强调色（橙色）
+      '#6c5ce7'     // 强调色（深紫色）
     ],
     
   },
@@ -102,6 +102,10 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
         remainingTime: this.calculateRemainingTime(settings)
       })
     }
+
+    const bgType = wx.getStorageSync('bgType') || 'color';
+    const backgroundImage = wx.getStorageSync('backgroundImage') || '';
+    this.setData({ bgType, backgroundImage });
   },
 
   onUnload() {
@@ -321,6 +325,39 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       backgroundColor: color,
       bgType: 'color'
     });
+  },
+
+  // 新增图片选择方法
+  async chooseImage() {
+    try {
+      const res = await wx.chooseMedia({
+        count: 1,
+        mediaType: ['image'],
+        sizeType: ['compressed']
+      });
+
+      if (res.tempFiles && res.tempFiles[0].tempFilePath) {
+        this.setData({
+          backgroundImage: res.tempFiles[0].tempFilePath
+        });
+        
+        // 立即保存到本地
+        wx.setStorageSync('backgroundImage', res.tempFiles[0].tempFilePath);
+      }
+    } catch (error) {
+      console.error('选择图片失败:', error);
+      wx.showToast({
+        title: '选择图片失败',
+        icon: 'none'
+      });
+    }
+  },
+
+  // 确保已存在setBgType方法
+  setBgType(e: WechatMiniprogram.TouchEvent) {
+    const type = e.currentTarget.dataset.type;
+    this.setData({ bgType: type });
+    wx.setStorageSync('bgType', type); // 立即保存类型
   },
 
   // ... existing other methods ...
