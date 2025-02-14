@@ -320,7 +320,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
 
   onRemindChange(e: WechatMiniprogram.InputEvent) {
     const value = parseInt(e.detail.value) || 0;
-    this.setData({ remindBefore: Math.max(0, Math.min(60, value)) });
+    this.setData({ remindBefore: Math.max(0, value) });
   },
 
   // 新增剩余时间计算方法

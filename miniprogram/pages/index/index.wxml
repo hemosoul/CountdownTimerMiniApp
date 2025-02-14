@@ -91,7 +91,7 @@
               <view class="weui-flex custom-time-inputs">
                 <view class="weui-flex__item">
                   <view class="weui-input-wrapper weui-input-wrapper--inline">
-                    <input class="weui-input" type="number" placeholder="0" min="0" max="60" value="{{remindBefore}}" bindinput="onRemindChange" />
+                    <input class="weui-input" type="number" placeholder="0" min="0" value="{{remindBefore}}" bindinput="onRemindChange" />
                     <view class="weui-input-extra">秒</view>
                   </view>
                 </view>
