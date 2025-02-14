@@ -75,7 +75,7 @@
             </view>
             <view class="weui-cell__bd">
               <view class="weui-flex custom-time-inputs">
-                <view class="weui-flex__item" style="flex: 1 0 30%; min-width: 100rpx;">
+                <view class="weui-flex__item" style="flex: 1 0 30%; ">
                   <view class="weui-input-wrapper weui-input-wrapper--inline" style="display: flex; align-items: center; gap: 8rpx;">
                     <input class="weui-input" 
                            type="number" 
@@ -84,11 +84,11 @@
                            max="23"
                            value="{{targetHours}}"
                            bindinput="onHoursChange"
-                           style="flex: 1; min-width: 80rpx;"/>
-                    <view class="weui-input-extra" style="flex-shrink: 0;">时</view>
+                           />
+                    <view class="weui-input-extra" >时</view>
                   </view>
                 </view>
-                <view class="weui-flex__item" style="flex: 1 0 25%; min-width: 90rpx;">
+                <view class="weui-flex__item" style="flex: 1 0 25%; ">
                   <view class="weui-input-wrapper weui-input-wrapper--inline" style="display: flex; align-items: center; gap: 8rpx;">
                     <input class="weui-input" 
                            type="number"
@@ -97,11 +97,11 @@
                            max="59"
                            value="{{targetMinutes}}"
                            bindinput="onMinutesChange"
-                           style="flex: 1;"/>
-                    <view class="weui-input-extra" style="flex-shrink: 0;">分</view>
+                          />
+                    <view class="weui-input-extra" >分</view>
                   </view>
                 </view>
-                <view class="weui-flex__item" style="flex: 1 0 25%; min-width: 90rpx;">
+                <view class="weui-flex__item" style="flex: 1 0 25%;">
                   <view class="weui-input-wrapper weui-input-wrapper--inline" style="display: flex; align-items: center; gap: 8rpx;">
                     <input class="weui-input" 
                            type="number"
@@ -110,8 +110,8 @@
                            max="59"
                            value="{{targetSeconds}}"
                            bindinput="onSecondsChange"
-                           style="flex: 1;"/>
-                    <view class="weui-input-extra" style="flex-shrink: 0;">秒</view>
+                           />
+                    <view class="weui-input-extra" >秒</view>
                   </view>
                 </view>
               </view>
@@ -164,11 +164,14 @@
               <text class="weui-label">选择颜色</text>
             </view>
             <view class="weui-cell__bd">
-              <view class="weui-grids">
+              <view class="color-grids">
                 <block wx:for="{{presetColors}}" wx:key="index">
-                  <view class="weui-grid {{backgroundColor === item ? 'weui-grid_active' : ''}}"
-                        style="background:{{item}}"
-                        bindtap="selectColor" data-color="{{item}}">
+                  <view 
+                    class="color-grid {{backgroundColor === item ? 'active' : ''}}"
+                    style="background:{{item}}; box-shadow: 0 2px 6px rgba(0,0,0,{{backgroundColor === item ? '0.4' : '0.2'}});"
+                    bindtap="selectColor" 
+                    data-color="{{item}}">
+                    <text wx:if="{{backgroundColor === item}}" class="iconfont icon-check"></text>
                   </view>
                 </block>
               </view>

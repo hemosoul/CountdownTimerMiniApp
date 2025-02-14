@@ -37,7 +37,7 @@ page {
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 50%;
+  left: 40%;
   top: 50%;
 }
 
@@ -191,7 +191,7 @@ page {
 .drawer-content {
   position: absolute;
   right: 0;
-  width: 100%;
+  width: 85%;
   height: 100%;
   background: #1a1a1a;
   box-shadow: -4px 0 16px rgba(0,0,0,0.2);
@@ -343,6 +343,7 @@ page {
   top: 50%;
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.6);
+  
 }
 
 /* 修复后的样式 */
@@ -360,8 +361,8 @@ page {
 }
 
 .weui-input-wrapper--inline .weui-input {
-  width: 80rpx;  /* 使用rpx单位 */
-  text-align: right;
+  width: 40rpx;  /* 使用rpx单位 */
+  text-align: center;
   color: #fff;
 }
 
@@ -427,4 +428,31 @@ page {
 .custom-time-inputs {
   gap: 10rpx; /* 增加项间距 */
   flex-wrap: nowrap; /* 禁止换行 */
+}
+
+.color-grids {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.color-grid {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 16rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.color-grid.active {
+  transform: scale(1.1);
+  box-shadow: 0 0 12rpx rgba(255,255,255,0.3) !important;
+}
+
+.icon-check {
+  color: #fff;
+  font-size: 40rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.3);
 }

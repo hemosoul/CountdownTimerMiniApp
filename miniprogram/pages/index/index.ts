@@ -34,6 +34,7 @@ type PageData = {
   remindBefore: number
   bgType: string
   backgroundImage: string
+  presetColors: string[]
 }
 
 Page<PageData, WechatMiniprogram.Page.CustomOption>({
@@ -62,7 +63,17 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     targetSeconds: 0,
     remindBefore: 5,
     bgType: 'color',
-    backgroundImage: ''
+    backgroundImage: '',
+    presetColors: [
+      '#1a1a1a',    // 基础黑
+      '#2d3436',    // 深炭灰
+      '#3a3a3a',    // 中性灰
+      '#2c3e50',    // 午夜蓝
+      '#34495e',    // 湿沥青
+      '#40407a',    // 深品蓝
+      '#222f3e',    // 帝王蓝
+      '#ff9f43'     // 强调色（橙色）
+    ],
   },
 
   onLoad() {
@@ -273,42 +284,42 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     this.setData({ remindBefore: Math.max(0, Math.min(60, value)) });
   },
 
-  // 新增保存设置方法
-  saveSettings() {
-    try {
-      wx.setStorageSync('countdownSettings', {
-        targetHours: this.data.targetHours,
-        targetMinutes: this.data.targetMinutes,
-        targetSeconds: this.data.targetSeconds,
-        remindBefore: this.data.remindBefore,
-        bgType: this.data.bgType,
-        backgroundColor: this.data.backgroundColor,
-        backgroundImage: this.data.backgroundImage
-      })
-      
-      // 关闭抽屉并提示
-      this.setData({ drawerVisible: false })
-      wx.showToast({
-        title: '保存成功',
-        icon: 'success',
-        duration: 1000
-      })
-      
-      // 重新计算倒计时
-      this.resetTimer()
-    } catch (e) {
-      wx.showToast({
-        title: '保存失败',
-        icon: 'error'
-      })
-    }
+  // 新增剩余时间计算方法
+  calculateRemainingTime(settings: any): number {
+    return settings.targetHours * 3600 + 
+           settings.targetMinutes * 60 + 
+           settings.targetSeconds;
   },
 
-  // 修改现有抽屉切换方法
-  toggleDrawer() {
+  // 新增重置计时器方法
+  resetTimer() {
+    this.clearTimer();
+    const totalSeconds = this.calculateRemainingTime({
+      targetHours: this.data.targetHours,
+      targetMinutes: this.data.targetMinutes,
+      targetSeconds: this.data.targetSeconds
+    });
     this.setData({
-      drawerVisible: !this.data.drawerVisible
-    })
+      remainingTime: totalSeconds,
+      isRunning: false
+    });
+    this.updateDisplay(totalSeconds);
+  },
+
+  // 颜色选择处理
+  selectColor(e: WechatMiniprogram.TouchEvent) {
+    const color = e.currentTarget.dataset.color;
+    this.setData({
+      backgroundColor: color,
+      bgType: 'color' // 确保切换到颜色模式
+    });
+    
+    // 立即更新背景（无需等待保存）
+    wx.setStorageSync('countdownSettings', {
+      ...wx.getStorageSync('countdownSettings'),
+      backgroundColor: color,
+      bgType: 'color'
+    });
   },
 
   // ... existing other methods ...
