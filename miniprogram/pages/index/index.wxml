@@ -168,7 +168,7 @@
                 <block wx:for="{{presetColors}}" wx:key="index">
                   <view 
                     class="color-grid {{backgroundColor === item ? 'active' : ''}}"
-                    style="background:{{item}}; box-shadow: 0 2px 6px rgba(0,0,0,{{backgroundColor === item ? '0.4' : '0.2'}});"
+                    style="background:{{item}}; border: 1px solid {{item === '#000000' ? 'rgba(255,255,255,0.3)' : 'transparent'}};"
                     bindtap="selectColor" 
                     data-color="{{item}}">
                     <text wx:if="{{backgroundColor === item}}" class="iconfont icon-check"></text>

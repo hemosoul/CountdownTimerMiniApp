@@ -74,6 +74,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       '#222f3e',    // 帝王蓝
       '#ff9f43'     // 强调色（橙色）
     ],
+    
   },
 
   onLoad() {
