@@ -32,6 +32,8 @@ type PageData = {
   bgType: string
   backgroundImage: string
   presetColors: string[]
+  showTitle: boolean
+  showDate: boolean
 }
 
 Page<PageData, WechatMiniprogram.Page.CustomOption>({
@@ -68,7 +70,8 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       '#222f3e',    // 帝王蓝
       '#6c5ce7'     // 强调色（深紫色）
     ],
-    
+    showTitle: true,
+    showDate: true,
   },
 
   onLoad() {
@@ -155,7 +158,9 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
         bgType: this.data.bgType,
         backgroundColor: this.data.backgroundColor,
         backgroundImage: this.data.backgroundImage,
-        title: this.data.title
+        title: this.data.title,
+        showTitle: this.data.showTitle,
+        showDate: this.data.showDate
       })
       
       // 关闭抽屉并提示
@@ -493,6 +498,16 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     this.setData({
       title: e.detail.value
     });
+  },
+
+  // 新增切换方法
+  toggleTitle(e: any) {
+    this.setData({ showTitle: e.detail.value });
+    this.saveSettings();
+  },
+  toggleDate(e: any) {
+    this.setData({ showDate: e.detail.value });
+    this.saveSettings();
   },
 
   // ... existing other methods ...

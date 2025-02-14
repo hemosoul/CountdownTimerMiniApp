@@ -3,9 +3,9 @@
   <view class="container" style="{{bgType === 'image' ? 'background-image: url(' + backgroundImage + ')' : 'background:' + backgroundColor}}; background-size: cover; background-position: center;">
     <view class="displayArea" bindtap="toggleTimer">
       <!-- 标题区域 -->
-      <view class="title">
+      <view class="title" wx:if="{{showTitle}}">
         <text>{{title || '面试倒计时'}}</text>
-        <text class="current-date">{{currentDate}}</text>
+        <text class="current-date" wx:if="{{showDate}}">{{currentDate}}</text>
       </view>
       <!-- 倒计时显示区域 -->
       <movable-area class="countdown-area">
@@ -137,7 +137,7 @@
             </view>
           </view>
           <!-- 图片上传 -->
-          <view class="weui-cell" style="margin-bottom:150rpx;">
+          <view class="weui-cell" style="">
             <view class="weui-cell__hd">
               <text class="weui-label">背景图片</text>
             </view>
@@ -156,6 +156,24 @@
               </view>
             </view>
           </view>
+
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <text class="weui-label">显示标题</text>
+            </view>
+            <view class="weui-cell__ft">
+              <switch checked="{{showTitle}}" bindchange="toggleTitle" />
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <text class="weui-label">显示日期</text>
+            </view>
+            <view class="weui-cell__ft">
+              <switch checked="{{showDate}}" bindchange="toggleDate" />
+            </view>
+          </view>
+
         </scroll-view>
         <!-- 底部固定按钮 -->
         <view class="weui-btn-area" style="position: sticky; bottom: 0; background: #1a1a1a; padding:15px 0 30px;z-index:100;">
