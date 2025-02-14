@@ -296,7 +296,31 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     this.clearTimer();
     this.setData({ isRunning: false });
     
-   
+    // 从本地存储加载初始设置
+    const savedSettings = wx.getStorageSync('countdownSettings');
+    if (savedSettings) {
+      // 重置到存储的初始值
+      this.setData({
+        targetHours: savedSettings.targetHours || 0,
+        targetMinutes: savedSettings.targetMinutes || 15, // 默认15分钟
+        targetSeconds: savedSettings.targetSeconds || 0,
+        remainingTime: this.calculateRemainingTime(savedSettings)
+      });
+      
+      // 更新显示
+      this.updateDisplay(this.calculateRemainingTime(savedSettings));
+    }
+
+    // 触发提醒
+    const audio = wx.createInnerAudioContext();
+    audio.src = '/resource/sound/timeup.mp3';
+    audio.play();
+    
+    wx.showToast({
+      title: '时间到！',
+      icon: 'none',
+      duration: 2000
+    });
   },
 
   // 打开设置
