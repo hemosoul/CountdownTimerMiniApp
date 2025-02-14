@@ -39,7 +39,7 @@ type PageData = {
 
 Page<PageData, WechatMiniprogram.Page.CustomOption>({
   data: {
-    title: '面试倒计时',
+    title: '',
     currentDate: '',
     hours: '00',
     minutes: '00',
@@ -59,9 +59,9 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     positionY: 0,
     drawerVisible: true,
     targetHours: 0,
-    targetMinutes: 0,
+    targetMinutes: 15,
     targetSeconds: 0,
-    remindBefore: 5,
+    remindBefore: 120,
     bgType: 'color',
     backgroundImage: '',
     presetColors: [
@@ -88,7 +88,10 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     })
 
     // 读取本地存储
-    const settings = wx.getStorageSync('countdownSettings')
+    const settings = wx.getStorageSync('countdownSettings') || {
+      targetTime: 15 * 60, // 15分钟转换为秒
+      remindBefore: 120
+    }
     if (settings) {
       this.setData({
         targetHours: settings.targetHours || 0,
@@ -99,7 +102,8 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
         backgroundColor: settings.backgroundColor || '#000000',
         backgroundImage: settings.backgroundImage || '',
         // 初始化时计算剩余时间
-        remainingTime: this.calculateRemainingTime(settings)
+        remainingTime: this.calculateRemainingTime(settings),
+        title: settings.title || '面试倒计时'
       })
     }
 
@@ -137,6 +141,9 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
 
   // 保存设置
   saveSettings() {
+    if (!this.data.title.trim()) {
+      this.setData({ title: '面试倒计时' });
+    }
     try {
       wx.setStorageSync('countdownSettings', {
         targetHours: this.data.targetHours,
@@ -145,7 +152,8 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
         remindBefore: this.data.remindBefore,
         bgType: this.data.bgType,
         backgroundColor: this.data.backgroundColor,
-        backgroundImage: this.data.backgroundImage
+        backgroundImage: this.data.backgroundImage,
+        title: this.data.title
       })
       
       // 关闭抽屉并提示
