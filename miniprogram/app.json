@@ -10,6 +10,9 @@
     "navigationBarBackgroundColor": "#ffffff",
     "pageOrientation": "landscape"
   },
+  "useExtendedLib": {
+    "weui": true
+  },
   "style": "v2",
   "componentFramework": "glass-easel",
   "lazyCodeLoading": "requiredComponents"

@@ -53,118 +53,137 @@
     </view>
 
     <!-- 抽屉容器 -->
-    <view class="drawer-container {{drawerVisible ? 'show' : ''}}">
+    <view class="drawer-container {{drawerVisible ? 'show' : ''}}" data-weui-theme="dark">
       <view class="drawer-mask" bindtap="toggleDrawer"></view>
-      <view class="drawer-content">
-        <!-- 设置内容 -->
-        <view class="drawer-header">
-          <text>设置</text>
-          <view class="close-btn" bindtap="toggleDrawer">×</view>
+      <view class="drawer-content weui-cells">
+        <!-- 头部使用WeUI的单元格样式 -->
+        <view class="weui-cell drawer-header">
+          <view class="weui-cell__bd">
+            <text class="weui-cell__title">设置</text>
+          </view>
+          <view class="weui-cell__ft">
+            <view class="weui-btn_icon-circle-close" bindtap="toggleDrawer"></view>
+          </view>
         </view>
-        <view class="setting-form">
-          <!-- 倒计时设置 -->
-          <view class="form-item">
-            <text class="form-label">倒计时间</text>
-            <view class="time-input-group">
-              <view class="input-wrapper">
-                <input 
-                  class="input" 
-                  type="number" 
-                  placeholder="0"
-                  min="0"
-                  value="{{targetHours}}"
-                  bindinput="onHoursChange"
-                />
-                <text class="input-suffix">时</text>
+
+        <!-- 倒计时设置使用WeUI表单结构 -->
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <text class="weui-label">目标时间</text>
+          </view>
+          <view class="weui-cell__bd">
+            <view class="weui-flex custom-time-inputs">
+              <view class="weui-flex__item">
+                <view class="weui-input-wrapper weui-input-wrapper--inline">
+                  <input class="weui-input" 
+                         type="number" 
+                         placeholder="0"
+                         min="0" 
+                         max="23"
+                         value="{{targetHours}}"
+                         bindinput="onHoursChange"/>
+                  <view class="weui-input-extra">时</view>
+                </view>
               </view>
-              <view class="input-wrapper">
-                <input 
-                  class="input" 
-                  type="number" 
-                  placeholder="0"
-                  min="0"
-                  max="59"
-                  value="{{targetMinutes}}"
-                  bindinput="onMinutesChange"
-                />
-                <text class="input-suffix">分</text>
+              <view class="weui-flex__item">
+                <view class="weui-input-wrapper weui-input-wrapper--inline">
+                  <input class="weui-input" 
+                         type="number"
+                         placeholder="0"
+                         min="0" 
+                         max="59"
+                         value="{{targetMinutes}}"
+                         bindinput="onMinutesChange"/>
+                  <view class="weui-input-extra">分</view>
+                </view>
               </view>
-              <view class="input-wrapper">
-                <input 
-                  class="input" 
-                  type="number" 
-                  placeholder="0"
-                  min="0"
-                  max="59"
-                  value="{{targetSeconds}}"
-                  bindinput="onSecondsChange"
-                />
-                <text class="input-suffix">秒</text>
+              <view class="weui-flex__item">
+                <view class="weui-input-wrapper weui-input-wrapper--inline">
+                  <input class="weui-input" 
+                         type="number"
+                         placeholder="0"
+                         min="0" 
+                         max="59"
+                         value="{{targetSeconds}}"
+                         bindinput="onSecondsChange"/>
+                  <view class="weui-input-extra">秒</view>
+                </view>
               </view>
             </view>
           </view>
+        </view>
 
-          <!-- 提醒设置 -->
-          <view class="form-item">
-            <text class="form-label">提前提醒</text>
-            <view class="radio-group">
-              <view 
-                class="radio-item {{remindBefore === 5 ? 'active' : ''}}"
-                bindtap="setRemindTime" 
-                data-value="5"
-              >5分钟前</view>
-              <view 
-                class="radio-item {{remindBefore === 10 ? 'active' : ''}}"
-                bindtap="setRemindTime" 
-                data-value="10"
-              >10分钟前</view>
+        <!-- 提醒设置使用WeUI输入样式 -->
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <text class="weui-label">提前提醒</text>
+          </view>
+          <view class="weui-cell__bd">
+            <view class="weui-flex custom-time-inputs">
+              <view class="weui-flex__item">
+                <view class="weui-input-wrapper weui-input-wrapper--inline">
+                  <input class="weui-input" 
+                         type="number"
+                         placeholder="0"
+                         min="0" 
+                         max="60"
+                         value="{{remindBefore}}"
+                         bindinput="onRemindChange"/>
+                  <view class="weui-input-extra">秒</view>
+                </view>
+              </view>
             </view>
           </view>
+        </view>
 
-          <!-- 背景设置 -->
-          <view class="form-item">
-            <text class="form-label">背景类型</text>
-            <view class="segmented-control">
-              <view 
-                class="segment {{bgType === 'color' ? 'active' : ''}}"
-                bindtap="setBgType" 
-                data-type="color"
-              >颜色</view>
-              <view 
-                class="segment {{bgType === 'image' ? 'active' : ''}}"
-                bindtap="setBgType" 
-                data-type="image"
-              >图片</view>
+        <!-- 背景类型选择使用WeUI分段器 -->
+        <view class="weui-cell">
+          <view class="weui-cell__hd">
+            <text class="weui-label">背景类型</text>
+          </view>
+          <view class="weui-cell__bd">
+            <view class="weui-segmented-control">
+              <block wx:for="{{['color', 'image']}}" wx:key="*this">
+                <view class="weui-segmented-control__item {{bgType === item ? 'weui-segmented-control__item_active' : ''}}"
+                      bindtap="setBgType" data-type="{{item}}">
+                  {{item === 'color' ? '颜色' : '图片'}}
+                </view>
+              </block>
             </view>
           </view>
+        </view>
 
-          <!-- 颜色选择器 -->
-          <view class="form-item" wx:if="{{bgType === 'color'}}">
-            <text class="form-label">选择颜色</text>
-            <view class="color-picker">
-              <view 
-                class="color-option {{backgroundColor === item ? 'selected' : ''}}"
-                wx:for="{{presetColors}}"
-                wx:key="index"
-                style="background: {{item}}"
-                bindtap="selectColor"
-                data-color="{{item}}"
-              />
+        <!-- 颜色选择器使用WeUI网格布局 -->
+        <view class="weui-cell" wx:if="{{bgType === 'color'}}">
+          <view class="weui-cell__hd">
+            <text class="weui-label">选择颜色</text>
+          </view>
+          <view class="weui-cell__bd">
+            <view class="weui-grids">
+              <block wx:for="{{presetColors}}" wx:key="index">
+                <view class="weui-grid {{backgroundColor === item ? 'weui-grid_active' : ''}}"
+                      style="background:{{item}}"
+                      bindtap="selectColor" data-color="{{item}}">
+                </view>
+              </block>
             </view>
           </view>
+        </view>
 
-          <!-- 图片上传 -->
-          <view class="form-item" wx:if="{{bgType === 'image'}}">
-            <button 
-              class="upload-btn" 
-              bindtap="chooseImage"
-            >{{backgroundImage ? '更换背景' : '选择图片'}}</button>
+        <!-- 图片上传使用WeUI按钮样式 -->
+        <view class="weui-cell" wx:if="{{bgType === 'image'}}">
+          <view class="weui-cell__bd">
+            <button class="weui-btn weui-btn_primary" 
+                    bindtap="chooseImage">
+              {{backgroundImage ? '更换背景' : '选择图片'}}
+            </button>
           </view>
+        </view>
 
-          <!-- 保存按钮 -->
-          <view class="form-action">
-            <button class="save-btn" bindtap="saveSettings">保存设置</button>
-          </view>
+        <!-- 保存按钮使用WeUI主按钮样式 -->
+        <view class="weui-btn-area">
+          <button class="weui-btn weui-btn_primary" 
+                  bindtap="saveSettings">保存设置</button>
         </view>
       </view>
     </view>

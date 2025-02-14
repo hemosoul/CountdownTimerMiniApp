@@ -31,6 +31,7 @@ type PageData = {
   targetHours: number
   targetMinutes: number
   targetSeconds: number
+  remindBefore: number
 }
 
 Page<PageData, WechatMiniprogram.Page.CustomOption>({
@@ -56,7 +57,8 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     drawerVisible: true,
     targetHours: 0,
     targetMinutes: 0,
-    targetSeconds: 0
+    targetSeconds: 0,
+    remindBefore: 5
   },
 
   onLoad() {
@@ -71,7 +73,9 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   },
 
   onUnload() {
-    this.clearTimer();
+    // 清理所有定时器和动画
+    if (this.data.timer) clearInterval(this.data.timer)
+    wx.offWindowResize() // 移除监听
   },
 
   // 更新当前日期
@@ -220,5 +224,10 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   onSecondsChange(e: any) {
     const value = Math.min(59, Math.max(0, parseInt(e.detail.value) || 0))
     this.setData({ targetSeconds: value })
+  },
+
+  onRemindChange(e: WechatMiniprogram.InputEvent) {
+    const value = parseInt(e.detail.value) || 0;
+    this.setData({ remindBefore: Math.max(0, Math.min(60, value)) });
   }
 });

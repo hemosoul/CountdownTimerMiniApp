@@ -1,8 +1,16 @@
 {
   "usingComponents": {
+    "mp-dialog": "/miniprogram_npm/weui-miniprogram/dialog/dialog",
+    "mp-cells": "/miniprogram_npm/weui-miniprogram/cells/cells",
+    "mp-cell": "/miniprogram_npm/weui-miniprogram/cell/cell",
+    "mp-checkbox-group": "/miniprogram_npm/weui-miniprogram/checkbox-group/checkbox-group",
+    "mp-checkbox": "/miniprogram_npm/weui-miniprogram/checkbox/checkbox",
+    "mp-grids": "/miniprogram_npm/weui-miniprogram/grids/grids",
+    "mp-form": "/miniprogram_npm/weui-miniprogram/form/form"
   },
   "navigationBarBackgroundColor": "#000000",
   "navigationBarTextStyle": "white",
-  "navigationStyle": "default",
+  "navigationStyle": "custom",
+  "disableScroll": true,
   "navigationBarTitleText": "面试倒计时"
 }
