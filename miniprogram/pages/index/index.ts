@@ -9,7 +9,7 @@ interface ICountdownSettings {
   hours: number;
   minutes: number;
   seconds: number;
-  reminderMinutes: number;
+  reminderSeconds: number;
   backgroundColor: string;
 }
 
@@ -46,7 +46,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       hours: 0,
       minutes: 0,
       seconds: 0,
-      reminderMinutes: 5,
+      reminderSeconds: 0,
       backgroundColor: '#000000'
     } as ICountdownSettings,
     positionX: 0,
@@ -216,7 +216,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     this.clearTimer()
     wx.showToast({
       title: '已暂停',
-      icon: 'success',
+      icon: 'none',
       duration: 1000
     })
   },
@@ -227,7 +227,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
 
     wx.showToast({
       title: '开始计时',
-      icon: 'success',
+      icon: 'none',
       duration: 1000
     })
     
@@ -272,14 +272,22 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
 
   // 检查提醒
   checkReminder(): void {
-    const reminderSeconds = this.data.settings.reminderMinutes * 60;
-    if (this.data.remainingTime === reminderSeconds) {
-      wx.vibrateLong();
+    if (this.data.remainingTime === this.data.remindBefore) {
+      const audio = wx.createInnerAudioContext();
+      audio.src = '/resource/sound/tip.mp3';
+      audio.play();
+      
       wx.showToast({
-        title: `还剩${this.data.settings.reminderMinutes}分钟`,
+        title: `还剩${this.data.remindBefore}秒`,
         icon: 'none',
         duration: 2000
       });
+    }else if(this.data.remainingTime ===  5){
+      const audio = wx.createInnerAudioContext();
+      audio.src = '/resource/sound/timeup.mp3';
+      audio.play();
+
+
     }
   },
 
@@ -287,12 +295,8 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   handleTimeUp(): void {
     this.clearTimer();
     this.setData({ isRunning: false });
-    wx.vibrateLong();
-    wx.showModal({
-      title: '时间到',
-      content: '倒计时结束',
-      showCancel: false
-    });
+    
+   
   },
 
   // 打开设置
