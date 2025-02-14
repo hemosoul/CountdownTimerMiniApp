@@ -36,7 +36,7 @@ type PageData = {
 
 Page<PageData, WechatMiniprogram.Page.CustomOption>({
   data: {
-    title: '',
+    title: '面试倒计时',
     currentDate: '',
     backgroundColor: '#000000',
     isRunning: false,
@@ -486,6 +486,13 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
         icon: 'none'
       });
     }
+  },
+
+  // 新增标题变更处理
+  onTitleChange(e: any) {
+    this.setData({
+      title: e.detail.value
+    });
   },
 
   // ... existing other methods ...

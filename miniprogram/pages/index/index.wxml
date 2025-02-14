@@ -61,6 +61,22 @@
         </view>
         <!-- 添加滚动容器 -->
         <scroll-view class="drawer-scroll" scroll-y style="height: 60vh;">
+          <!-- 新增标题设置 -->
+          <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+              <text class="weui-label">标题设置</text>
+            </view>
+            <view class="weui-cell__bd">
+              <input 
+                class="weui-input" 
+                type="text" 
+                placeholder="请输入标题" 
+                maxlength="12"
+                value="{{title}}" 
+                bindinput="onTitleChange"
+              />
+            </view>
+          </view>
           <!-- 倒计时设置 -->
           <view class="weui-cell weui-cell_input">
             <view class="weui-cell__hd">
