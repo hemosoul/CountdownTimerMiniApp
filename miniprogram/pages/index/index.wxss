@@ -165,7 +165,7 @@ page {
   right: -100%;
   height: 100vh;
   width: 80%;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s ease-in-out;
   z-index: 1000;
 }
 
@@ -363,4 +363,68 @@ page {
   width: 80rpx;  /* 使用rpx单位 */
   text-align: right;
   color: #fff;
+}
+
+.weui-btn_primary {
+  background-color: #2a2e3b !important; /* 暗色系背景 */
+  border-radius: 8px !important; /* 匹配Fliqlo圆角风格 */
+  color: #e0e0e0 !important; /* 浅灰色文字 */
+  border: 1px solid #3d424d !important; /* 添加边框增强层次感 */
+  transition: all 0.2s ease; /* 添加过渡动画 */
+}
+
+.weui-btn_primary:active {
+  transform: scale(0.98); /* 按压效果 */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 阴影变化 */
+}
+
+.weui-btn-area {
+  padding: 20rpx 0;
+}
+
+/* 保存按钮加载状态样式 */
+.weui-btn_loading.weui-btn_primary {
+  background-color: #07c160;
+  opacity: 0.6;
+}
+
+.drawer-scroll {
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.weui-grids {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.weui-grid {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.weui-grid_active {
+  transform: scale(0.95);
+  box-shadow: 0 0 0 2px #07c160;
+}
+
+@media (max-width: 320px) {
+  .custom-time-inputs .weui-flex__item {
+    flex: 0 0 33.33%;
+  }
+  .weui-input {
+    width: 50px !important;
+    font-size: 14px;
+  }
+  .weui-input-extra {
+    font-size: 12px;
+  }
+}
+
+.custom-time-inputs {
+  gap: 10rpx; /* 增加项间距 */
+  flex-wrap: nowrap; /* 禁止换行 */
 }

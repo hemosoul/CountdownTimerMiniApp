@@ -32,6 +32,8 @@ type PageData = {
   targetMinutes: number
   targetSeconds: number
   remindBefore: number
+  bgType: string
+  backgroundImage: string
 }
 
 Page<PageData, WechatMiniprogram.Page.CustomOption>({
@@ -58,7 +60,9 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     targetHours: 0,
     targetMinutes: 0,
     targetSeconds: 0,
-    remindBefore: 5
+    remindBefore: 5,
+    bgType: 'color',
+    backgroundImage: ''
   },
 
   onLoad() {
@@ -70,6 +74,22 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
       positionX: position.x,
       positionY: position.y
     })
+
+    // 读取本地存储
+    const settings = wx.getStorageSync('countdownSettings')
+    if (settings) {
+      this.setData({
+        targetHours: settings.targetHours || 0,
+        targetMinutes: settings.targetMinutes || 0,
+        targetSeconds: settings.targetSeconds || 0,
+        remindBefore: settings.remindBefore || 0,
+        bgType: settings.bgType || 'color',
+        backgroundColor: settings.backgroundColor || '#000000',
+        backgroundImage: settings.backgroundImage || '',
+        // 初始化时计算剩余时间
+        remainingTime: this.calculateRemainingTime(settings)
+      })
+    }
   },
 
   onUnload() {
@@ -100,12 +120,34 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   },
 
   // 保存设置
-  saveSettings(settings: ICountdownSettings): void {
-    const totalSeconds = this.data.targetHours * 3600 
-      + this.data.targetMinutes * 60 
-      + this.data.targetSeconds
-    wx.setStorageSync('countdownSettings', settings);
-    this.setData({ settings });
+  saveSettings() {
+    try {
+      wx.setStorageSync('countdownSettings', {
+        targetHours: this.data.targetHours,
+        targetMinutes: this.data.targetMinutes,
+        targetSeconds: this.data.targetSeconds,
+        remindBefore: this.data.remindBefore,
+        bgType: this.data.bgType,
+        backgroundColor: this.data.backgroundColor,
+        backgroundImage: this.data.backgroundImage
+      })
+      
+      // 关闭抽屉并提示
+      this.setData({ drawerVisible: false })
+      wx.showToast({
+        title: '保存成功',
+        icon: 'success',
+        duration: 1000
+      })
+      
+      // 重新计算倒计时
+      this.resetTimer()
+    } catch (e) {
+      wx.showToast({
+        title: '保存失败',
+        icon: 'error'
+      })
+    }
   },
 
   // 开始计时器
@@ -229,5 +271,45 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   onRemindChange(e: WechatMiniprogram.InputEvent) {
     const value = parseInt(e.detail.value) || 0;
     this.setData({ remindBefore: Math.max(0, Math.min(60, value)) });
-  }
+  },
+
+  // 新增保存设置方法
+  saveSettings() {
+    try {
+      wx.setStorageSync('countdownSettings', {
+        targetHours: this.data.targetHours,
+        targetMinutes: this.data.targetMinutes,
+        targetSeconds: this.data.targetSeconds,
+        remindBefore: this.data.remindBefore,
+        bgType: this.data.bgType,
+        backgroundColor: this.data.backgroundColor,
+        backgroundImage: this.data.backgroundImage
+      })
+      
+      // 关闭抽屉并提示
+      this.setData({ drawerVisible: false })
+      wx.showToast({
+        title: '保存成功',
+        icon: 'success',
+        duration: 1000
+      })
+      
+      // 重新计算倒计时
+      this.resetTimer()
+    } catch (e) {
+      wx.showToast({
+        title: '保存失败',
+        icon: 'error'
+      })
+    }
+  },
+
+  // 修改现有抽屉切换方法
+  toggleDrawer() {
+    this.setData({
+      drawerVisible: !this.data.drawerVisible
+    })
+  },
+
+  // ... existing other methods ...
 });
