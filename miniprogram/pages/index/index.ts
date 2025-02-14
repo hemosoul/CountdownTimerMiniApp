@@ -503,11 +503,16 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   // 新增切换方法
   toggleTitle(e: any) {
     this.setData({ showTitle: e.detail.value });
-    this.saveSettings();
+    
   },
   toggleDate(e: any) {
     this.setData({ showDate: e.detail.value });
-    this.saveSettings();
+
+  },
+
+  stopPropagation(e: WechatMiniprogram.BaseEvent) {
+    // 空方法实现，仅用于阻止事件冒泡
+    // 保留事件对象类型标注以保证类型安全
   },
 
   // ... existing other methods ...

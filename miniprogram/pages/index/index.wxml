@@ -162,7 +162,7 @@
               <text class="weui-label">显示标题</text>
             </view>
             <view class="weui-cell__ft">
-              <switch checked="{{showTitle}}" bindchange="toggleTitle" />
+              <switch checked="{{showTitle}}" bindchange="toggleTitle" catch:tap="stopPropagation" />
             </view>
           </view>
           <view class="weui-cell weui-cell_input">
@@ -170,7 +170,7 @@
               <text class="weui-label">显示日期</text>
             </view>
             <view class="weui-cell__ft">
-              <switch checked="{{showDate}}" bindchange="toggleDate" />
+              <switch checked="{{showDate}}" bindchange="toggleDate" catch:tap="stopPropagation" />
             </view>
           </view>
 
