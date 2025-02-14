@@ -29,17 +29,28 @@ page {
   color: #ccc9c9;
 }
 
+.displayArea {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 .countdown-area {
+  flex: 1;
+  width: 100%;
   position: relative;
 }
 
 .countdown-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
-  left: 40%;
-  top: 50%;
 }
 
 .time-block {
@@ -51,14 +62,15 @@ page {
 
 .flip-card {
   background: rgba(51, 51, 51, 0.5);
-  padding: 10rpx 20rpx;
+  padding: 4vmin 6vmin;
   border-radius: 10rpx;
-  font-size: 12vmin;
+  font-size: 20vmin;
   font-weight: bold;
-  min-width: 120rpx;
+  min-width: 22vmin;
   text-align: center;
   border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  margin: 0 2vmin;
 }
 
 .time-separator {
@@ -168,7 +180,6 @@ page {
   right: -100%;
   height: 100vh;
   width: 100%;
-  transition: transform 0.3s ease-in-out;
   z-index: 1000;
 }
 
@@ -422,7 +433,7 @@ page {
     flex: 0 0 33.33%;
   }
   .weui-input {
-    width: 50px !important;
+    width: 50px;
     font-size: 14px;
   }
   .weui-input-extra {

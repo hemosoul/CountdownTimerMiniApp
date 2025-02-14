@@ -41,7 +41,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     backgroundColor: '#000000',
     isRunning: false,
     remainingTime: 0,
-    timer: undefined as number | undefined,
+    timer: null as number | null,
     settings: {
       hours: 0,
       minutes: 0,
@@ -89,7 +89,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
 
     // 读取本地存储
     const settings = wx.getStorageSync('countdownSettings') || {
-      targetTime: 15 * 60, // 15分钟转换为秒
+      targetTime: 15 * 60, // 15分钟转换为秒 startTimer
       remindBefore: 120
     }
     console.log(settings);
@@ -176,25 +176,49 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     }
   },
 
-  // 开始计时器
-  startTimer(): void {
-    if (this.data.isRunning) return;
-
+  // 新增切换计时方法
+  toggleTimer() {
     if (this.data.remainingTime <= 0) {
-      this.data.remainingTime = 
-        this.data.settings.hours * 3600 + 
-        this.data.settings.minutes * 60 + 
-        this.data.settings.seconds;
+      wx.showToast({
+        title: '请先设置时间',
+        icon: 'none'
+      })
+      return
     }
 
-    this.setData({ isRunning: true });
-    this.runTimer();
+    if (this.data.isRunning) {
+      this.pauseTimer()
+    } else {
+      this.startTimer()
+    }
   },
 
-  // 暂停计时器
+  // 修改后的开始计时方法
+  startTimer(): void {
+    if (this.data.isRunning) return
+    
+    // 首次启动时初始化剩余时间
+    if (this.data.remainingTime <= 0) {
+      this.data.remainingTime = this.calculateRemainingTime({
+        targetHours: this.data.targetHours,
+        targetMinutes: this.data.targetMinutes,
+        targetSeconds: this.data.targetSeconds
+      })
+    }
+
+    this.setData({ isRunning: true })
+    this.runTimer()
+  },
+
+  // 修改后的暂停计时方法
   pauseTimer(): void {
-    this.setData({ isRunning: false });
-    this.clearTimer();
+    this.setData({ isRunning: false })
+    this.clearTimer()
+    wx.showToast({
+      title: '已暂停',
+      icon: 'success',
+      duration: 1000
+    })
   },
 
   // 运行计时器
@@ -219,7 +243,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
   clearTimer(): void {
     if (this.data.timer) {
       clearInterval(this.data.timer);
-      this.setData({ timer: undefined });
+      this.setData({ timer: null });
     }
   },
 
