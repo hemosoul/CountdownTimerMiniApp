@@ -53,7 +53,7 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     } as ICountdownSettings,
     positionX: 0,
     positionY: 0,
-    drawerVisible: true,
+    drawerVisible: false,
     targetHours: 0,
     targetMinutes: 15,
     targetSeconds: 0,
