@@ -388,32 +388,33 @@ Page<PageData, WechatMiniprogram.Page.CustomOption>({
     });
   },
 
-  // 新增图片选择方法
-  async chooseImage() {
-    try {
-      const res = await wx.chooseMedia({
-        count: 1,
-        mediaType: ['image'],
-        sizeType: ['compressed']
-      });
+  // 修改后的图片选择方法
+  chooseImage() {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],  // 保留压缩选项
+      sourceType: ['album', 'camera'],  // 同时支持相册和相机
+      success: (res) => {
+        console.log(res.tempFilePaths);
+        if (res.tempFilePaths.length > 0) {
+          this.setData({
+            backgroundImage: res.tempFilePaths[0],
+            bgType: 'image'
+          });
 
-      if (res.tempFiles?.[0]?.tempFilePath) {
-        this.setData({
-          backgroundImage: res.tempFiles[0].tempFilePath,
-          bgType: 'image' // 强制切换背景类型为图片
-        });
-
-        // 更新存储设置
-        wx.setStorageSync('countdownSettings', {
-          ...wx.getStorageSync('countdownSettings'),
-          backgroundImage: res.tempFiles[0].tempFilePath,
-          bgType: 'image'
-        });
+          // 更新存储设置
+          wx.setStorageSync('countdownSettings', {
+            ...wx.getStorageSync('countdownSettings'),
+            backgroundImage: res.tempFilePaths[0],
+            bgType: 'image'
+          });
+        }
+      },
+      fail: (error) => {
+        console.error('选择图片失败:', error);
+        wx.showToast({ title: '选择图片失败', icon: 'none' });
       }
-    } catch (error) {
-      console.error('选择图片失败:', error);
-      wx.showToast({ title: '选择图片失败', icon: 'none' });
-    }
+    });
   },
 
   // 确保已存在setBgType方法
