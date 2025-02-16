@@ -12,21 +12,21 @@
         <movable-view class="countdown-container" direction="all" inertia="true" x="{{positionX}}" y="{{positionY}}" bindchange="onMove" style="transform: translate(-50%, -50%);">
           <view class="time-block">
             <view class="flip-card">
-              <text>{{targetHours}}</text>
+              <text>{{hours}}</text>
             </view>
             <text class="time-label">小时</text>
           </view>
           <view class="time-separator">:</view>
           <view class="time-block">
             <view class="flip-card">
-              <text>{{targetMinutes}}</text>
+              <text>{{minutes}}</text>
             </view>
             <text class="time-label">分钟</text>
           </view>
           <view class="time-separator">:</view>
           <view class="time-block">
             <view class="flip-card">
-              <text>{{targetSeconds}}</text>
+              <text>{{seconds}}</text>
             </view>
             <text class="time-label">秒</text>
           </view>
